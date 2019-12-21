@@ -34,7 +34,6 @@ bool Network_Group::join_network(uint32_t target_ip, uint16_t target_port){
         return true;
     }
 
-
     /* Build up a join request packet */
     struct NETG::NETG_packet_t join_packet;
 
@@ -52,7 +51,6 @@ bool Network_Group::join_network(uint32_t target_ip, uint16_t target_port){
         return false;
     }
 
-    
     /* Get the first response */
     struct NETG::NETG_packet_t  response;
     struct sockaddr_in          remote_addr;
@@ -77,8 +75,6 @@ bool Network_Group::join_network(uint32_t target_ip, uint16_t target_port){
             perror("Malformed Response:");
         }
 
-        inspect_packet(&response);
-
         /* Check to make sure we got a join response */
         if(response.type == NETG::JOIN_RESPONSE){
 
@@ -99,7 +95,7 @@ bool Network_Group::join_network(uint32_t target_ip, uint16_t target_port){
             /* Updated expected computers based upon the response */
             expected_computers = response.body.join_response.num_computers_in_group;
             printf("Joined with %s from %08X:%X\n", node->name, ntohl(node->ip_address), node->ip_port);
-            printf("Told to look for %d computers\n", expected_computers);
+            // printf("Told to look for %d computers\n", expected_computers);
 
             num_known_computers++;
             discovered_computers++;

@@ -31,7 +31,6 @@ IMG_CMD := objcopy
 CC_ARM	:= /opt/arm/bin/arm-gcc
 CXX_ARM	:= /opt/arm/bin/arm-g++
 
-
 OPT 			:= -O3 -g
 INCLUDE_DIRS 	:= $(addprefix -I, $(SOURCE_DIRS))
 WARN			:= -Wall
@@ -45,6 +44,8 @@ ARM	:= arm_$(PRJ_NAME).exe
 IMG := $(PRJ_NAME).img
 
 all: $(EXE) $(ARM)
+
+arm: $(EXE) $(ARM)
 
 exe: $(EXE)
 

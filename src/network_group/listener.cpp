@@ -26,8 +26,6 @@ void Network_Group::listener(){
         perror("Malformed incoming packet");
     }
 
-    inspect_packet(&remote_pkt);
-
     /* Do something with the packet */
     switch(remote_pkt.type){
         case NETG::JOIN_REQUEST:
@@ -37,6 +35,10 @@ void Network_Group::listener(){
         case NETG::JOIN_COMMAND:
             printf("Processing Join Command\n");
             perform_join_command(&remote_pkt);
+            break;
+        case NETG::DATA_COMMAND:
+            // printf("Processing Data Command\n");
+            perform_data_command(&remote_pkt);
             break;
         default:
             break;

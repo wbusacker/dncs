@@ -11,7 +11,7 @@ Network_Group::Network_Group(){
         node = &(node_list[node_index]);
 
         node->ip_address    = 0;
-        node->data_buffer   = NULL;
+        node->data[0]       = 0;
         node->data_length   = 0;
         for(name_index = 0; name_index < NETG::MAX_STRING_ID_LENGTH; name_index++){
             node->name[name_index] = '\0';

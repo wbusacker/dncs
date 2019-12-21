@@ -14,7 +14,6 @@ enum Packet_types: uint8_t {
     RESPONSE_ACK                                    /* Acknowledge packet recieved                      */
 };
 
-
 /* Use to join a network */
 struct Join_request_t{
     uint8_t     name[NETG::MAX_STRING_ID_LENGTH];   /* Name of computer requesting to be in the group   */

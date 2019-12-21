@@ -16,7 +16,7 @@ bool Network_Group::transmit_packet(struct NETG_packet_t *pkt, uint8_t node_num)
     /* Put the local name in the packet */
     memcpy(pkt->name, local_name, NETG::MAX_STRING_ID_LENGTH);
 
-    printf("Transmitting packet to %08X:%04X\n", ntohl(target.sin_addr.s_addr), target.sin_port);
+    // printf("Transmitting packet to %08X:%04X\n", ntohl(target.sin_addr.s_addr), target.sin_port);
 
     ret_val = sendto(socket_fd,
                      (const void*)pkt,

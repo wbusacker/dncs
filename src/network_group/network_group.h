@@ -17,8 +17,9 @@ struct Node{
     uint32_t    ip_address;
     uint16_t    ip_port;
     uint8_t     name[NETG::MAX_STRING_ID_LENGTH];
-    void*       data_buffer;
+    uint8_t     data[NETG::MAX_DATA_LENGTH];
     uint32_t    data_length;
+    bool        stale_data;
 };
 
 class Network_Group{
@@ -30,17 +31,28 @@ class Network_Group{
 
         bool        join_network(uint32_t target_ip, uint16_t target_port);
         void        listener();
-        void        sync_data_command(void* buffer, uint32_t data_length);
+        void        sync_data_command(uint8_t *buffer, uint32_t data_length);
         void        dump_table(void);
-        uint8_t     read_data(uint8_t *buffer,
-                              uint32_t *data_length,
-                              uint8_t name[NETG::MAX_STRING_ID_LENGTH]
+        uint32_t    read_data(uint8_t *buffer,
+                              char name[NETG::MAX_STRING_ID_LENGTH]
                               );
+        uint8_t     get_group_names(char names[NETG::MAX_NODES_ALLOWABLE][NETG::MAX_STRING_ID_LENGTH]);
+
+        inline void shutdown(void){
+            should_shutdown = true;
+        }
+
+        inline bool check_shutdown(void){
+            return should_shutdown;
+        }
 
     private:
 
-        void        perform_join_command(struct NETG_packet_t *pkt);
         void        perform_join_request(struct NETG_packet_t *pkt, struct sockaddr_in *addr);
+        void        perform_join_command(struct NETG_packet_t *pkt);
+        void        perform_data_command(struct NETG_packet_t *pkt);
+
+
         bool        transmit_packet(struct NETG_packet_t *pkt, uint8_t node_num);
         void        get_packet(struct NETG_packet_t *pkt);
 
@@ -52,6 +64,8 @@ class Network_Group{
 
         int                 socket_fd;
         struct sockaddr_in  socket_port;
+
+        volatile bool       should_shutdown;
 
 };
 
